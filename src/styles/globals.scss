@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .form-control {
+    @apply py-2 px-3 bg-slate-200 rounded-lg outline-none;
+  }
+  .form-control[type="color"] {
+    @apply h-10 w-[97px];
+  }
+
+  .button-gray {
+    @apply bg-gray-primary text-black border-black border rounded-lg px-2 py-3 transition-all duration-200 hover:translate-y-1;
+  }
+}

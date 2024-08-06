@@ -9,9 +9,19 @@ const config: Config = {
   theme: {
     extend: {
       backgroundImage: {
-        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "gradient-conic":
-          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+        dot: "url('/images/bg-dot.svg')",
+      },
+      colors: {
+        "gray-primary": "#dbdada",
+      },
+      maxHeight: {
+        body: "calc(100vh - 77px)",
+      },
+      minHeight: {
+        body: "calc(100vh - 77px)",
+      },
+      height: {
+        body: "calc(100vh - 77px)",
       },
     },
   },
