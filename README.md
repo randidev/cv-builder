@@ -1,40 +1,93 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# CV Builder
 
-## Getting Started
+## Table of Contents
 
-First, run the development server:
+- [Core Technologies](#core-technologies)
+- [Getting Started](#getting-started)
+- [Project Structure](#project-structure)
+- [Code Scaffolding](#code-scaffolding)
+- [Development Documentation](#development-documentation)
+
+### Core Technologies
+
+- Frontend :
+  - [Next.js (React)](https://nextjs.org/)
+  - [TypeScript](https://www.typescriptlang.org/)
+  - [Redux Toolkit](https://redux-toolkit.js.org/)
+
+### Getting Started
 
 ```bash
-npm run dev
-# or
+# Install dependencies for the host
+yarn
+
+# Start the application
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Project Structure
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+| Name                  | Description                                         |
+| --------------------- | --------------------------------------------------- |
+| **src/components**/\* | All app wise common components                      |
+| **src/config**/\*     | Any app level environment configs should go here.   |
+| **src/dummy**/\*      | Any dummy contents.                                 |
+| **src/hooks**/\*      | Custom react hooks                                  |
+| **src/pages**/\*      | App pages                                           |
+| **src/redux**/\*      | Redux store that stores all global state of the app |
+| **src/styles**/\*     | Common/Global styles                                |
+| **src/utils**/\*      | Utility functions                                   |
+| .eslintrc.json        | Eslint configuration                                |
+| .gitignore            | Folder and files ignored by git.                    |
+| next.config.js        | Next.js configuration                               |
+| package.json          | NPM dependencies.                                   |
+| tsconfig.json         | Contains typescript configuration for this project. |
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+## Code Scaffolding
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+### Components ( if needed )
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Check the `components` folder if you have neccessary components needed to finish your screen. If not, you can define the component in the screen itself or add any components here if you think it is reusable between screens.
 
-## Learn More
+1. Create a folder for the component in `src/components`. The name should be able to give others the idea what the component is about.
+2. Create a root component file called `index.tsx` under that folder. This file will define the component itself.
+3. (Optional) You can also create a component within a component for complex components.
 
-To learn more about Next.js, take a look at the following resources:
+### Pages
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+The screen defines a collection of components. You can define some components here if you think it is only usable within the screen but preferrably components should be resuable. Any logic, API request, or retrieving from redux store should be defined here.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+1. Create a folder under `src/pages`. Make sure the name is concise enough to understand what the component is about.
+2. Create a root page file called `index.tsx`. This file will define the page itself.
 
-## Deploy on Vercel
+## Naming Convention
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### For variables, files and folders
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Use `camelCase` for files and folders that are not components or pages and `camelCase` for variables within files. The only exception would be the component and pages names which should be `PascalCase`.
+
+```
+// File name is Button.tsx
+
+const Button: React.FC = () => {
+  const propName = 'Sample'
+  return <EditProfile name={propName} />;
+};
+```
+
+In some cases, we include the file `functionality` in its file name in the format:
+
+`<file-name>-<functionality>.<extension>`
+`<file-name><functionality>.<extension>`
+
+Non-component/screen file/folder naming example:
+
+- rootReducer.ts
+
+Pages/component file/folder naming example:
+
+- Navbar
+- Breadcrumb
+- Layout
+
+## Development Documentation
