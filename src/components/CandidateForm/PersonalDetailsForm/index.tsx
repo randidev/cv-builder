@@ -23,6 +23,14 @@ export default function PersonalDetailsForm({
         </div>
 
         <CandidateField
+          label="Job Title"
+          name="jobTitle"
+          value={candidate.jobTitle}
+          onChange={(value) => onChange("jobTitle", value)}
+          className="mt-5"
+        />
+
+        <CandidateField
           label="Email Address"
           name="email"
           value={candidate.email}

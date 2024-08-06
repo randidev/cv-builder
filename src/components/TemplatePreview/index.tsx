@@ -52,11 +52,19 @@ export default function TemplatePreview({
   }, [debouncedTemplate]);
 
   useEffect(() => {
-    if (!loading && !loadingCandidate && !toastId.current) {
+    if (
+      ((loading !== null && !loading) ||
+        (loadingCandidate !== null && !loadingCandidate)) &&
+      toastId.current == null
+    ) {
       toastId.current = toast.loading("Loading...");
-    } else if (toastId.current) {
-      toast.success("Preview updated.", { id: toastId.current });
-      toastId.current = null;
+    } else {
+      if (toastId.current !== null) {
+        toast.success("Preview updated.", {
+          id: toastId.current,
+        });
+        toastId.current = null;
+      }
     }
   }, [loading, loadingCandidate]);
 

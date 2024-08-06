@@ -1,4 +1,5 @@
 export const dummyCandidate: Candidate = {
+  id: "1",
   firstName: "John",
   lastName: "Doe",
   email: "johndoe@example.com",
