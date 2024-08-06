@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Fragment } from "react";
 
 interface BreadcrumbProps {
@@ -12,7 +13,7 @@ export default function Breadcrumb({ items }: BreadcrumbProps) {
     <div className="flex gap-3 text-sm">
       {items.map((item, index) => (
         <Fragment key={item.link}>
-          <a href={item.link}>{item.text}</a>
+          <Link href={item.link}>{item.text}</Link>
           {index < items.length - 1 && <span>{">"}</span>}
         </Fragment>
       ))}

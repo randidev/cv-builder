@@ -5,6 +5,7 @@ import useAppDispatch from "@/hooks/useAppDispatch";
 import useAppSelector from "@/hooks/useAppSelector";
 import { actions, selectors } from "@/redux/templates";
 import { v4 as uuidv4 } from "uuid";
+import APP from "@/config/app";
 
 const useTemplate = (id?: string | string[] | undefined) => {
   const dispatch = useAppDispatch();
@@ -31,7 +32,7 @@ const useTemplate = (id?: string | string[] | undefined) => {
       if (id) {
         const newTemplate = { ...tempTemplate };
         dispatch(actions.editTemplateAction(newTemplate));
-        toast.success("Successfully edited template.", {
+        toast.success("Successfully edit template's detail.", {
           id: toastId.current,
         });
       } else {
@@ -43,7 +44,7 @@ const useTemplate = (id?: string | string[] | undefined) => {
       }
 
       setTimeout(() => {
-        router.push("/templates");
+        router.push(APP.LINKS.TEMPLATES.DEFAULT + "?success");
       }, 1000);
     } catch (error) {
       console.error(error);

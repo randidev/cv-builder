@@ -1,4 +1,4 @@
-import { View, Text } from "@react-pdf/renderer";
+import { View, Text, Image } from "@react-pdf/renderer";
 
 const convertStringToComponents = (str: string, styles: any) => {
   const paragraphs = str.trim().split("\n\n"); // Split paragraphs by double newlines
@@ -27,4 +27,14 @@ const convertStringToComponents = (str: string, styles: any) => {
   return components;
 };
 
-export { convertStringToComponents };
+const renderWatermark = (watermark: string, styles: any) =>
+  watermark && watermark !== "" ? (
+    <View style={styles.watermark}>
+      <Image
+        src={watermark}
+        style={{ width: "100%", height: "100%", objectFit: "contain" }}
+      />
+    </View>
+  ) : null;
+
+export { convertStringToComponents, renderWatermark };

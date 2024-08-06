@@ -29,6 +29,7 @@ interface Skill {
 }
 
 interface Candidate {
+  id: string;
   firstName: string;
   lastName: string;
   jobTitle: string;
@@ -42,4 +43,14 @@ interface Candidate {
   references: any[]; // assuming references can be any type, can be more specific if needed
   linkedin: string;
   skills: Skill[];
+}
+
+type CandidateItem = Candidate & { idTemplate: string };
+
+interface CandidateState {
+  items: CandidateItem[];
+}
+
+interface TemporaryCandidateState {
+  detail: CandidateItem;
 }

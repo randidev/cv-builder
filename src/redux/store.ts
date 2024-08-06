@@ -6,7 +6,7 @@ import { rootReducer } from "./rootReducer";
 const persistConfig = {
   key: "ResumeBuilder",
   storage,
-  blacklist: ["utils", "templateTemporary"],
+  blacklist: ["utils", "templateTemporary", "candidateTemporary"],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

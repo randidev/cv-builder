@@ -1,15 +1,7 @@
 import { FormEvent } from "react";
 import Breadcrumb from "../Breadcrumb";
-import useAppSelector from "@/hooks/useAppSelector";
-import { actions, selectors } from "@/redux/templates";
-import useAppDispatch from "@/hooks/useAppDispatch";
 import { convertImageToBase64 } from "@/utils/helpers";
-
-const breadcrumbs = [
-  { text: "Home", link: "/" },
-  { text: "Templates", link: "/templates" },
-  { text: "Create", link: "#" },
-];
+import APP from "@/config/app";
 
 interface TemplateFormProps {
   template: Template;
@@ -22,11 +14,29 @@ export default function TemplateForm({
   template,
   onChange,
 }: TemplateFormProps) {
-  const dispatch = useAppDispatch();
+  const breadcrumbs = [
+    { text: "Home", link: "/" },
+    { text: "Templates", link: APP.LINKS.TEMPLATES.DEFAULT },
+    { text: template.id ? `Edit ${template.title}` : "Create", link: "#" },
+  ];
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     onSubmit();
+  };
+
+  const handleInputChange =
+    (key: keyof Template) => (e: React.ChangeEvent<HTMLInputElement>) => {
+      onChange(key, e.target.value);
+    };
+
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (files) {
+      const file = files[0];
+      const base64 = await convertImageToBase64(file);
+      onChange("watermark", base64);
+    }
   };
 
   return (
@@ -37,24 +47,25 @@ export default function TemplateForm({
       </div>
       <form onSubmit={handleSubmit} className="mt-5">
         <div className="flex flex-col gap-5">
-          Type
+          <label className="font-medium">Type</label>
           <div className="flex items-start gap-10">
             {["1", "2"].map((type) => (
               <label
                 key={type}
-                htmlFor={String(type)}
+                htmlFor={type}
                 className="flex gap-2 items-start">
                 <input
                   type="radio"
                   name="type"
-                  id={String(type)}
+                  id={type}
                   checked={template.type === type}
                   required
-                  onChange={(e) => onChange("type", String(type))}
+                  onChange={() => onChange("type", type)}
                 />
                 <img
                   src={`/images/templates/${type}.png`}
                   className="max-w-[150px] cursor-pointer"
+                  alt={`Template type ${type}`}
                 />
               </label>
             ))}
@@ -62,23 +73,19 @@ export default function TemplateForm({
         </div>
 
         <div className="mt-7 flex flex-col gap-1">
-          <label className="w-fit" htmlFor="title">
-            Title
-          </label>
+          <label htmlFor="title">Title</label>
           <input
             className="form-control"
             id="title"
             required
             name="title"
             value={template.title}
-            onChange={(e) => onChange("title", e.target.value)}
+            onChange={handleInputChange("title")}
           />
         </div>
 
         <div className="mt-7 flex flex-col gap-1">
-          <label className="w-fit" htmlFor="fontSize">
-            Font Size
-          </label>
+          <label htmlFor="fontSize">Font Size</label>
           <div className="flex items-center gap-2">
             <input
               className="form-control"
@@ -86,19 +93,17 @@ export default function TemplateForm({
               min={0}
               max={200}
               id="fontSize"
-              required
               name="fontSize"
+              required
               value={template.fontSize}
-              onChange={(e) => onChange("fontSize", e.target.value)}
+              onChange={handleInputChange("fontSize")}
             />
             <span>{template.fontSize}%</span>
           </div>
         </div>
 
         <div className="mt-7 flex flex-col gap-1">
-          <label className="w-fit" htmlFor="colour">
-            Colour Scheme
-          </label>
+          <label htmlFor="colour">Colour Scheme</label>
           <input
             className="form-control"
             type="color"
@@ -106,14 +111,12 @@ export default function TemplateForm({
             name="colour"
             required
             value={template.colourScheme}
-            onChange={(e) => onChange("colourScheme", e.target.value)}
+            onChange={handleInputChange("colourScheme")}
           />
         </div>
 
         <div className="mt-7 flex flex-col gap-1">
-          <label className="w-fit" htmlFor="margin">
-            Margin
-          </label>
+          <label htmlFor="margin">Margin</label>
           <div className="flex items-center gap-2">
             <input
               className="form-control"
@@ -124,33 +127,27 @@ export default function TemplateForm({
               name="margin"
               required
               value={template.margin}
-              onChange={(e) => onChange("margin", e.target.value)}
+              onChange={handleInputChange("margin")}
             />
             <span>{template.margin}%</span>
           </div>
         </div>
 
         <div className="mt-7 flex flex-col gap-1">
-          <label className="w-fit" htmlFor="watermark">
-            Watermark
-          </label>
+          <label htmlFor="watermark">Watermark</label>
           <input
             type="file"
             className="form-control"
             id="watermark"
             name="watermark"
-            onChange={async (e) => {
-              const files = e.target.files;
-
-              if (files) {
-                const file = files[0];
-                const base64 = await convertImageToBase64(file);
-                onChange("watermark", base64);
-              }
-            }}
+            onChange={handleFileChange}
           />
           {template.watermark && (
-            <img src={template.watermark} className="max-w-[150px]" />
+            <img
+              src={template.watermark}
+              className="max-w-[150px] mt-2"
+              alt="Watermark preview"
+            />
           )}
         </div>
 

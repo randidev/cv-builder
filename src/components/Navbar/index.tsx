@@ -1,49 +1,53 @@
+import APP from "@/config/app";
 import clsx from "clsx";
+import Link from "next/link";
 import { useRouter } from "next/router";
 
-export default function Navbar() {
-  const router = useRouter();
-  const { pathname } = router;
+const Navbar: React.FC = () => {
+  const { pathname } = useRouter();
+
+  const navItems = [
+    {
+      href: APP.LINKS.TEMPLATES.DEFAULT,
+      label: "Template Builder",
+      active: pathname.includes("templates"),
+    },
+    {
+      href: APP.LINKS.CANDIDATES.DEFAULT,
+      label: "Candidates List",
+      active: pathname.includes("candidates"),
+    },
+  ];
 
   return (
-    <>
-      <div className="border-b border-gray-primary py-5">
-        <div className="bg-white container mx-auto">
-          <div className="flex items-center justify-between">
-            <h5 className="font-bold text-xl">MANATAL - Resume Builder</h5>
-            <nav>
-              <ul className="flex items-center gap-5 text-sm">
-                <li>
-                  <a
-                    href="templates"
+    <div className="border-b border-gray-primary py-5">
+      <div className="bg-white container mx-auto">
+        <div className="flex items-center justify-between">
+          <Link href="/">
+            <h5 className="font-bold text-xl">App - Resume Builder</h5>
+          </Link>
+          <nav>
+            <ul className="flex items-center gap-5 text-sm">
+              {navItems.map(({ href, label, active }) => (
+                <li key={href}>
+                  <Link
+                    href={href}
                     className={clsx(
                       "block py-2 px-3 rounded-lg hover:bg-slate-200 transition-all ease-in-out duration-200",
                       {
-                        "bg-slate-400 text-white":
-                          pathname.indexOf("templates") >= 0,
+                        "bg-slate-400 text-white": active,
                       }
                     )}>
-                    Template Builder
-                  </a>
+                    {label}
+                  </Link>
                 </li>
-                <li>
-                  <a
-                    href="resume"
-                    className={clsx(
-                      "block py-2 px-3 rounded-lg hover:bg-slate-200 transition-all ease-in-out duration-200",
-                      {
-                        "bg-slate-400 text-white":
-                          pathname.indexOf("resume") >= 0,
-                      }
-                    )}>
-                    Resume Builder
-                  </a>
-                </li>
-              </ul>
-            </nav>
-          </div>
+              ))}
+            </ul>
+          </nav>
         </div>
       </div>
-    </>
+    </div>
   );
-}
+};
+
+export default Navbar;

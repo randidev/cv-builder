@@ -17,4 +17,15 @@ function convertImageToBase64(file: File): Promise<string> {
   });
 }
 
-export { convertImageToBase64 };
+function getPastYears(year: number) {
+  const currentYear = new Date().getFullYear();
+  const years = [];
+
+  for (let i = 0; i <= year; i++) {
+    years.push(currentYear - i);
+  }
+
+  return years;
+}
+
+export { convertImageToBase64, getPastYears };

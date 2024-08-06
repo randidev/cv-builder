@@ -6,9 +6,9 @@ import {
   StyleSheet,
   Image,
 } from "@react-pdf/renderer";
-import { convertStringToComponents } from "../utils/helpers";
+import { convertStringToComponents, renderWatermark } from "../utils/helpers";
 
-const Template2 = ({ template, candidate }: TemplateProps) => {
+const Template2: React.FC<TemplateProps> = ({ template, candidate }) => {
   const fontSizePercentage = template.fontSize / 100;
   const marginSizePercentage = template.margin / 100;
 
@@ -87,8 +87,8 @@ const Template2 = ({ template, candidate }: TemplateProps) => {
       top: 0,
       right: 0,
       bottom: 0,
-      opacity: 0.2, // Adjust opacity as needed
-      zIndex: -1, // Place behind other content
+      opacity: 0.2,
+      zIndex: -1,
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
@@ -105,17 +105,108 @@ const Template2 = ({ template, candidate }: TemplateProps) => {
     },
   });
 
-  const PDFDocument = () => (
+  const renderSocialMedia = () => (
+    <View
+      style={{
+        ...styles.socialMedia,
+        marginTop: `${baseMarginSizes.headerSocmed}pt`,
+      }}>
+      {[
+        { src: "/images/icons/email.png", text: candidate.email },
+        { src: "/images/icons/link.png", text: candidate.linkedin },
+        { src: "/images/icons/pin.png", text: candidate.address },
+      ].map(({ src, text }) => (
+        <View key={src} style={{ ...styles.socialMedia, gap: `2pt` }}>
+          <Image src={src} style={styles.icons} />
+          <Text style={styles.text}>{text}</Text>
+        </View>
+      ))}
+    </View>
+  );
+
+  const renderSectionWithHorizontalLine = (title: string, content: any) => (
+    <View style={{ marginTop: `${baseMarginSizes.section}pt` }}>
+      <Text style={styles.titleText}>{title}</Text>
+      <View style={styles.horizontalLine}></View>
+      {content}
+    </View>
+  );
+
+  const renderExperience = (experience: Experience) => (
+    <View
+      key={experience.title}
+      style={{ ...styles.listDown, gap: `${baseMarginSizes.small}pt` }}>
+      <View style={styles.listBetween}>
+        <Text style={styles.text}>{experience.title}</Text>
+        <Text style={styles.text}>
+          {experience.startDate} - {experience.endDate}
+        </Text>
+      </View>
+      <View style={styles.listBetween}>
+        <Text style={{ ...styles.titleText, color: template.colourScheme }}>
+          {experience.company}
+        </Text>
+        <Text style={styles.text}>{experience.location}</Text>
+      </View>
+      <View style={{ marginTop: "15pt" }}>
+        {convertStringToComponents(experience.description, styles)}
+      </View>
+    </View>
+  );
+
+  const renderEducation = (edu: Education) => (
+    <View
+      key={edu.major}
+      style={{ ...styles.listDown, gap: `${baseMarginSizes.small}pt` }}>
+      <View style={styles.listBetween}>
+        <Text style={styles.text}>
+          {edu.degree} in {edu.major}
+        </Text>
+        <Text style={styles.text}>
+          {edu.startDate} - {edu.endDate}
+        </Text>
+      </View>
+      <View style={styles.listBetween}>
+        <Text style={{ ...styles.titleText, color: template.colourScheme }}>
+          {edu.university ?? edu.school}
+        </Text>
+        <Text style={styles.text}>{edu.location}</Text>
+      </View>
+      <View style={{ marginTop: "15pt" }}>
+        {convertStringToComponents(edu.description, styles)}
+      </View>
+    </View>
+  );
+
+  const renderSkills = (skills: Skill[]) => (
+    <View style={styles.listDown}>
+      {skills.map((skill) => (
+        <Text key={skill.name} style={styles.text}>
+          {skill.name}
+        </Text>
+      ))}
+    </View>
+  );
+
+  const renderCertifications = (certifications: Certification[]) => (
+    <View style={styles.listDown}>
+      {certifications.map((cert) => (
+        <View
+          key={cert.name}
+          style={{ ...styles.listDown, gap: `${baseMarginSizes.small}pt` }}>
+          <View style={styles.listBetween}>
+            <Text style={styles.text}>{cert.name}</Text>
+            <Text style={styles.text}>{cert.date}</Text>
+          </View>
+        </View>
+      ))}
+    </View>
+  );
+
+  return (
     <Document>
       <Page>
-        {template.watermark && template.watermark !== "" && (
-          <View style={styles.watermark}>
-            <Image
-              src={template.watermark} // Replace with your watermark image URL
-              style={{ width: "100%", height: "100%", objectFit: "contain" }}
-            />
-          </View>
-        )}
+        {renderWatermark(template.watermark ?? "", styles)}
 
         <View style={{ display: "flex", flexDirection: "row" }}>
           <View style={{ width: "65%", padding: "20pt" }}>
@@ -130,115 +221,29 @@ const Template2 = ({ template, candidate }: TemplateProps) => {
                 }}>
                 {candidate.jobTitle}
               </Text>
+              {renderSocialMedia()}
+            </View>
 
-              <View
-                style={{
-                  ...styles.socialMedia,
-                  marginTop: `${baseMarginSizes.headerSocmed}pt`,
-                }}>
-                <View
-                  style={{
-                    ...styles.socialMedia,
-                    gap: `2pt`,
-                  }}>
-                  <Image src={"/images/icons/email.png"} style={styles.icons} />
-                  <Text style={styles.text}>{candidate.email}</Text>
-                </View>
-
-                <View
-                  style={{
-                    ...styles.socialMedia,
-                    gap: `2pt`,
-                  }}>
-                  <Image src={"/images/icons/link.png"} style={styles.icons} />
-                  <Text style={styles.text}>{candidate.linkedin}</Text>
-                </View>
-
-                <View
-                  style={{
-                    ...styles.socialMedia,
-                    gap: `2pt`,
-                  }}>
-                  <Image src={"/images/icons/pin.png"} style={styles.icons} />
-                  <Text style={styles.text}>{candidate.address}</Text>
-                </View>
+            {renderSectionWithHorizontalLine(
+              "SUMMARY",
+              <View style={styles.text}>
+                {convertStringToComponents(candidate.description, styles)}
               </View>
-            </View>
+            )}
 
-            <View>
-              <Text style={styles.titleText}>SUMMARY</Text>
-              <View style={styles.horizontalLine}></View>
-              <Text style={styles.text}>{candidate.description}</Text>
-            </View>
-
-            <View style={{ marginTop: `${baseMarginSizes.section}pt` }}>
-              <Text style={styles.titleText}>EXPERIENCE</Text>
-              <View style={styles.horizontalLine}></View>
+            {renderSectionWithHorizontalLine(
+              "EXPERIENCE",
               <View style={styles.listDown}>
-                {candidate.experiences.map((ex) => (
-                  <View
-                    key={ex.title}
-                    style={{
-                      ...styles.listDown,
-                      gap: `${baseMarginSizes.small}pt`,
-                    }}>
-                    <View style={styles.listBetween}>
-                      <Text style={styles.text}>{ex.title}</Text>
-                      <Text style={styles.text}>
-                        {ex.startDate} - {ex.endDate}
-                      </Text>
-                    </View>
-                    <View style={styles.listBetween}>
-                      <Text
-                        style={{
-                          ...styles.titleText,
-                          color: template.colourScheme,
-                        }}>
-                        {ex.company}
-                      </Text>
-                      <Text style={styles.text}>{ex.location}</Text>
-                    </View>
-                    <View style={{ marginTop: "15pt" }}>
-                      {convertStringToComponents(ex.description, styles)}
-                    </View>
-                  </View>
-                ))}
+                {candidate.experiences.map(renderExperience)}
               </View>
-            </View>
+            )}
 
-            <View style={{ marginTop: `${baseMarginSizes.section}pt` }}>
-              <Text style={styles.titleText}>EDUCATION</Text>
-              <View style={styles.horizontalLine}></View>
+            {renderSectionWithHorizontalLine(
+              "EDUCATION",
               <View style={styles.listDown}>
-                {candidate.education.map((ed) => (
-                  <View
-                    key={ed.major}
-                    style={{
-                      ...styles.listDown,
-                      gap: `${baseMarginSizes.small}pt`,
-                    }}>
-                    <View style={styles.listBetween}>
-                      <Text style={styles.text}>
-                        {ed.degree} in {ed.major}
-                      </Text>
-                      <Text style={styles.text}>
-                        {ed.startDate} - {ed.endDate}
-                      </Text>
-                    </View>
-                    <View style={styles.listBetween}>
-                      <Text
-                        style={{
-                          ...styles.titleText,
-                          color: template.colourScheme,
-                        }}>
-                        {ed.university ?? ed.school}
-                      </Text>
-                      <Text style={styles.text}>{ed.location}</Text>
-                    </View>
-                  </View>
-                ))}
+                {candidate.education.map(renderEducation)}
               </View>
-            </View>
+            )}
           </View>
 
           <View
@@ -250,22 +255,13 @@ const Template2 = ({ template, candidate }: TemplateProps) => {
             <View
               style={{
                 padding: `${baseMarginSizes.rightSide}pt 10pt`,
-                display: "flex",
-                height: "100%",
-                alignItems: "flex-start",
-                justifyContent: "flex-start",
                 color: "#fff",
+                height: "100%",
               }}>
               <View style={{ width: "100%" }}>
                 <Text style={styles.titleText}>SKILLS</Text>
                 <View style={styles.horizontalLineWhite}></View>
-                <View style={styles.listDown}>
-                  {candidate.skills.map((skill) => (
-                    <Text style={styles.text} key={skill.name}>
-                      {skill.name}
-                    </Text>
-                  ))}
-                </View>
+                {renderSkills(candidate.skills)}
               </View>
 
               <View
@@ -275,21 +271,7 @@ const Template2 = ({ template, candidate }: TemplateProps) => {
                 }}>
                 <Text style={styles.titleText}>CERTIFICATION</Text>
                 <View style={styles.horizontalLineWhite}></View>
-                <View style={styles.listDown}>
-                  {candidate.certifications.map((cert) => (
-                    <View
-                      key={cert.name}
-                      style={{
-                        ...styles.listDown,
-                        gap: `${baseMarginSizes.small}pt`,
-                      }}>
-                      <View style={styles.listBetween}>
-                        <Text style={styles.text}>{cert.name}</Text>
-                        <Text style={styles.text}>{cert.date}</Text>
-                      </View>
-                    </View>
-                  ))}
-                </View>
+                {renderCertifications(candidate.certifications)}
               </View>
             </View>
           </View>
@@ -297,8 +279,6 @@ const Template2 = ({ template, candidate }: TemplateProps) => {
       </Page>
     </Document>
   );
-
-  return <PDFDocument />;
 };
 
 export default Template2;

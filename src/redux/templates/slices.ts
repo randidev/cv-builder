@@ -29,6 +29,9 @@ const templateSlice = createSlice({
 
       state.items = newState;
     },
+    PURGE: (state) => {
+      state = initialState;
+    },
   },
 });
 

@@ -1,6 +1,6 @@
 import { combineReducers } from "@reduxjs/toolkit";
 
-import { candidateReducer } from "./candidate/slices";
+import { candidateReducer, tempCandidateReducer } from "./candidate/slices";
 import { utilsReducer } from "./utils/slices";
 import { templateReducer, tempTemplateReducer } from "./templates/slices";
 
@@ -9,6 +9,7 @@ const appReducer = combineReducers({
   utils: utilsReducer,
   templates: templateReducer,
   templateTemporary: tempTemplateReducer,
+  candidateTemporary: tempCandidateReducer,
 });
 
 const rootReducer = (state: any, action: any) => {
