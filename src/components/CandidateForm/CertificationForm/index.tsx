@@ -20,7 +20,7 @@ export default function CertificationForm({
   const handleChangeCertification = (
     index: number,
     key: keyof Certification,
-    value: string
+    value: string,
   ) => {
     const newCertifications = [...candidate.certifications];
     newCertifications[index] = {
@@ -34,12 +34,13 @@ export default function CertificationForm({
     <div>
       <button
         onClick={handleAddCertification}
-        className="button-gray w-full mb-10">
+        className="button-gray mb-10 w-full"
+      >
         Add Certification +
       </button>
 
       {candidate.certifications.map((exp, index) => (
-        <div key={index} className="mb-4 p-4 border rounded">
+        <div key={index} className="mb-4 rounded border p-4">
           <CandidateField
             label="Name"
             name="name"

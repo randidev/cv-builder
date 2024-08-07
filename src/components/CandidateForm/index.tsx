@@ -106,7 +106,7 @@ const CandidateForm: React.FC<CandidateFormProps> = ({
   return (
     <div
       className={clsx(
-        "p-5 max-w-full h-body lg:w-[600px] w-full bg-white border-l border-gray-primary lg:translate-x-0 lg:relative absolute transition-all duration-300 overflow-y-auto max-h-body",
+        "p-5 max-w-full h-bodyMobile sm:h-body lg:w-[600px] w-full bg-white border-l border-gray-primary lg:translate-x-0 lg:relative absolute transition-all duration-300 overflow-y-auto max-h-bodyMobile sm:max-h-body",
         { "translate-x-full": !utils.showEditor },
         { "translate-x-0": utils.showEditor }
       )}>

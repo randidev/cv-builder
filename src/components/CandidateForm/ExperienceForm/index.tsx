@@ -19,7 +19,7 @@ export default function ExperienceForm({
 }: CommonCandidateFormProps) {
   const years = getPastYears(50);
   const [isPresent, setIsPresent] = useState<boolean[]>(
-    new Array(candidate.experiences.length).fill(false)
+    new Array(candidate.experiences.length).fill(false),
   );
 
   const handleAddExperience = () => {
@@ -30,7 +30,7 @@ export default function ExperienceForm({
   const handleChangeExperience = (
     index: number,
     key: keyof Experience,
-    value: string
+    value: string,
   ) => {
     const newExperiences = [...candidate.experiences];
     newExperiences[index] = {
@@ -52,12 +52,13 @@ export default function ExperienceForm({
     <div>
       <button
         onClick={handleAddExperience}
-        className="button-gray w-full mb-10">
+        className="button-gray mb-10 w-full"
+      >
         Add Experience +
       </button>
 
       {candidate.experiences.map((exp, index) => (
-        <div key={index} className="mb-4 p-4 border rounded">
+        <div key={index} className="mb-4 rounded border p-4">
           <CandidateField
             label="Job Title"
             name="title"
@@ -85,7 +86,7 @@ export default function ExperienceForm({
             className="mt-5"
           />
 
-          <div className={clsx("mt-5 items-end grid gap-2 grid-cols-2")}>
+          <div className={clsx("mt-5 grid grid-cols-2 items-end gap-2")}>
             <CandidateDateField
               label="Start Date"
               date={exp.startDate}
@@ -108,7 +109,7 @@ export default function ExperienceForm({
           </div>
 
           <div className="mt-2">
-            <label className="w-fit flex items-center gap-3">
+            <label className="flex w-fit items-center gap-3">
               <input
                 type="checkbox"
                 onChange={(e) => handleIsPresent(index, e.target.checked)}

@@ -36,8 +36,9 @@ export default function ResumeList() {
   const CandidateItem = ({ candidate, template }: CandidateProps) => (
     <div key={candidate.id} className="flex flex-col">
       <Link
-        className="block hover:translate-y-1 transition-all duration-200 w-fit"
-        href={`${APP.LINKS.CANDIDATES.EDIT}/${candidate.id}`}>
+        className="block w-fit transition-all duration-200 hover:translate-y-1"
+        href={`${APP.LINKS.CANDIDATES.EDIT}/${candidate.id}`}
+      >
         <PDFViewer width={"100%"} height={"200px"} showToolbar={false}>
           {template.type === "1" ? (
             <Template1 template={template} candidate={candidate} />
@@ -59,32 +60,34 @@ export default function ResumeList() {
           )
         }
         fileName={`${candidate.firstName}_${candidate.lastName}_CV.pdf`}
-        className="button-gray w-full text-center mt-5">
+        className="button-gray mt-5 w-full text-center"
+      >
         {({ loading }) => (loading ? "Generating PDF..." : "Download PDF")}
       </PDFDownloadLink>
 
       <button
         onClick={(e) => handleDelete(e, candidate.id)}
-        className="button-gray w-full text-center mt-5">
+        className="button-gray mt-5 w-full text-center"
+      >
         Delete Candidate
       </button>
     </div>
   );
 
   return (
-    <div className="container mx-auto py-5 lg:px-0 px-5">
-      <div className="flex justify-between items-center">
-        <h1 className="font-medium text-lg">My Candidates</h1>
+    <div className="container mx-auto px-5 py-5 lg:px-0">
+      <div className="flex items-center justify-between">
+        <h1 className="text-lg font-medium">My Candidates</h1>
         <Link className="button-gray block" href={APP.LINKS.CANDIDATES.CREATE}>
           Add New Candidate+
         </Link>
       </div>
       <div className="mt-6">
         {candidates.length > 0 ? (
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+          <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-5">
             {candidates.map((candidate) => {
               const selectedTemplate = templates.find(
-                (t) => t.id === candidate.idTemplate
+                (t) => t.id === candidate.idTemplate,
               );
               return (
                 selectedTemplate && (

@@ -16,16 +16,17 @@ const CandidateDateField = ({
   return (
     <label>
       {label}
-      <div className="flex gap-2 items-center">
+      <div className="flex items-center gap-2">
         <select
           name="month"
           className="form-control w-full"
           value={month}
           onChange={(e) =>
             onChangeDate(
-              e.target.value + " " + (year ?? new Date().getFullYear())
+              e.target.value + " " + (year ?? new Date().getFullYear()),
             )
-          }>
+          }
+        >
           {[
             "January",
             "February",
@@ -51,9 +52,10 @@ const CandidateDateField = ({
           value={year}
           onChange={(e) => {
             onChangeDate(
-              (month ?? "January") + " " + e.target.value.toString()
+              (month ?? "January") + " " + e.target.value.toString(),
             );
-          }}>
+          }}
+        >
           {years.map((y) => (
             <option key={y} value={y}>
               {y}

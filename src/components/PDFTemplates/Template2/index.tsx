@@ -110,7 +110,8 @@ const Template2: React.FC<TemplateProps> = ({ template, candidate }) => {
       style={{
         ...styles.socialMedia,
         marginTop: `${baseMarginSizes.headerSocmed}pt`,
-      }}>
+      }}
+    >
       {[
         { src: "/images/icons/email.png", text: candidate.email },
         { src: "/images/icons/link.png", text: candidate.linkedin },
@@ -135,7 +136,8 @@ const Template2: React.FC<TemplateProps> = ({ template, candidate }) => {
   const renderExperience = (experience: Experience) => (
     <View
       key={experience.title}
-      style={{ ...styles.listDown, gap: `${baseMarginSizes.small}pt` }}>
+      style={{ ...styles.listDown, gap: `${baseMarginSizes.small}pt` }}
+    >
       <View style={styles.listBetween}>
         <Text style={styles.text}>{experience.title}</Text>
         <Text style={styles.text}>
@@ -157,7 +159,8 @@ const Template2: React.FC<TemplateProps> = ({ template, candidate }) => {
   const renderEducation = (edu: Education) => (
     <View
       key={edu.major}
-      style={{ ...styles.listDown, gap: `${baseMarginSizes.small}pt` }}>
+      style={{ ...styles.listDown, gap: `${baseMarginSizes.small}pt` }}
+    >
       <View style={styles.listBetween}>
         <Text style={styles.text}>
           {edu.degree} in {edu.major}
@@ -193,7 +196,8 @@ const Template2: React.FC<TemplateProps> = ({ template, candidate }) => {
       {certifications.map((cert) => (
         <View
           key={cert.name}
-          style={{ ...styles.listDown, gap: `${baseMarginSizes.small}pt` }}>
+          style={{ ...styles.listDown, gap: `${baseMarginSizes.small}pt` }}
+        >
           <View style={styles.listBetween}>
             <Text style={styles.text}>{cert.name}</Text>
             <Text style={styles.text}>{cert.date}</Text>
@@ -218,7 +222,8 @@ const Template2: React.FC<TemplateProps> = ({ template, candidate }) => {
                 style={{
                   ...styles.title,
                   marginTop: `${baseMarginSizes.small}pt`,
-                }}>
+                }}
+              >
                 {candidate.jobTitle}
               </Text>
               {renderSocialMedia()}
@@ -228,21 +233,21 @@ const Template2: React.FC<TemplateProps> = ({ template, candidate }) => {
               "SUMMARY",
               <View style={styles.text}>
                 {convertStringToComponents(candidate.description, styles)}
-              </View>
+              </View>,
             )}
 
             {renderSectionWithHorizontalLine(
               "EXPERIENCE",
               <View style={styles.listDown}>
                 {candidate.experiences.map(renderExperience)}
-              </View>
+              </View>,
             )}
 
             {renderSectionWithHorizontalLine(
               "EDUCATION",
               <View style={styles.listDown}>
                 {candidate.education.map(renderEducation)}
-              </View>
+              </View>,
             )}
           </View>
 
@@ -251,13 +256,15 @@ const Template2: React.FC<TemplateProps> = ({ template, candidate }) => {
               width: "35%",
               height: "100vh",
               backgroundColor: template.colourScheme,
-            }}>
+            }}
+          >
             <View
               style={{
                 padding: `${baseMarginSizes.rightSide}pt 10pt`,
                 color: "#fff",
                 height: "100%",
-              }}>
+              }}
+            >
               <View style={{ width: "100%" }}>
                 <Text style={styles.titleText}>SKILLS</Text>
                 <View style={styles.horizontalLineWhite}></View>
@@ -268,7 +275,8 @@ const Template2: React.FC<TemplateProps> = ({ template, candidate }) => {
                 style={{
                   marginTop: `${baseMarginSizes.section}pt`,
                   width: "100%",
-                }}>
+                }}
+              >
                 <Text style={styles.titleText}>CERTIFICATION</Text>
                 <View style={styles.horizontalLineWhite}></View>
                 {renderCertifications(candidate.certifications)}

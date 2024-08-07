@@ -21,7 +21,7 @@ export default function EducationForm({
 }: CommonCandidateFormProps) {
   const years = getPastYears(50);
   const [isPresent, setIsPresent] = useState<boolean[]>(
-    new Array(candidate.education.length).fill(false)
+    new Array(candidate.education.length).fill(false),
   );
 
   const handleAddEducation = () => {
@@ -32,7 +32,7 @@ export default function EducationForm({
   const handleChangeEducation = (
     index: number,
     key: keyof Education,
-    value: string
+    value: string,
   ) => {
     const newEducations = [...candidate.education];
     newEducations[index] = {
@@ -52,12 +52,12 @@ export default function EducationForm({
 
   return (
     <div>
-      <button onClick={handleAddEducation} className="button-gray w-full mb-10">
+      <button onClick={handleAddEducation} className="button-gray mb-10 w-full">
         Add Education +
       </button>
 
       {candidate.education.map((exp, index) => (
-        <div key={index} className="mb-4 p-4 border rounded">
+        <div key={index} className="mb-4 rounded border p-4">
           <CandidateField
             label="University/School"
             name="university"
@@ -83,7 +83,7 @@ export default function EducationForm({
             className="mt-5"
           />
 
-          <div className={clsx("mt-5 items-end grid gap-2 grid-cols-2")}>
+          <div className={clsx("mt-5 grid grid-cols-2 items-end gap-2")}>
             <CandidateDateField
               label="Start Date"
               date={exp.startDate}
@@ -106,7 +106,7 @@ export default function EducationForm({
           </div>
 
           <div className="mt-2">
-            <label className="w-fit flex items-center gap-3">
+            <label className="flex w-fit items-center gap-3">
               <input
                 type="checkbox"
                 onChange={(e) => handleIsPresent(index, e.target.checked)}

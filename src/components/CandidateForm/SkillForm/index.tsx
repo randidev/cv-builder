@@ -17,7 +17,7 @@ export default function SkillForm({
   const handleChangeSkill = (
     index: number,
     key: keyof Skill,
-    value: string
+    value: string,
   ) => {
     const newSkills = [...candidate.skills];
     newSkills[index] = {
@@ -29,12 +29,12 @@ export default function SkillForm({
 
   return (
     <div>
-      <button onClick={handleAddSkill} className="button-gray w-full mb-10">
+      <button onClick={handleAddSkill} className="button-gray mb-10 w-full">
         Add Skill +
       </button>
 
       {candidate.skills.map((exp, index) => (
-        <div key={index} className="mb-4 p-4 border rounded">
+        <div key={index} className="mb-4 rounded border p-4">
           <CandidateField
             label="Name"
             name="name"

@@ -49,10 +49,11 @@ export default function TemplateForm({
   return (
     <div
       className={clsx(
-        "p-5 max-w-full bg-white h-body lg:w-[600px] w-full border-l border-gray-primary overflow-y-auto max-h-body lg:translate-x-0 lg:relative absolute transition-all duration-300",
+        "absolute h-bodyMobile max-h-bodyMobile w-full max-w-full overflow-y-auto border-l border-gray-primary bg-white p-5 transition-all duration-300 sm:h-body sm:max-h-body lg:relative lg:w-[600px] lg:translate-x-0",
         { "translate-x-full": !utils.showEditor },
-        { "translate-x-0": utils.showEditor }
-      )}>
+        { "translate-x-0": utils.showEditor },
+      )}
+    >
       <div className="mb-10 flex items-center justify-between">
         <Breadcrumb items={breadcrumbs} />
         <h3 className="text-lg font-medium">Editor</h3>
@@ -60,12 +61,13 @@ export default function TemplateForm({
       <form onSubmit={handleSubmit} className="mt-5">
         <div className="flex flex-col gap-5">
           <label className="font-medium">Type</label>
-          <div className="flex items-start flex-wrap gap-10">
+          <div className="flex flex-wrap items-start gap-10">
             {["1", "2"].map((type) => (
               <label
                 key={type}
                 htmlFor={type}
-                className="flex gap-2 items-start">
+                className="flex items-start gap-2"
+              >
                 <input
                   type="radio"
                   name="type"
@@ -157,7 +159,7 @@ export default function TemplateForm({
           {template.watermark && (
             <img
               src={template.watermark}
-              className="max-w-[150px] mt-2"
+              className="mt-2 max-w-[150px]"
               alt="Watermark preview"
             />
           )}
@@ -168,10 +170,11 @@ export default function TemplateForm({
             dispatch(actions.setUtilsAction({ showEditor: false }))
           }
           type="button"
-          className="mt-10 lg:hidden block button-gray w-full">
+          className="button-gray mt-10 block w-full lg:hidden"
+        >
           Preview
         </button>
-        <button type="submit" className="mt-5 button-gray w-full">
+        <button type="submit" className="button-gray mt-5 w-full">
           Submit
         </button>
       </form>

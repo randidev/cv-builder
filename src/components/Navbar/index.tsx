@@ -21,10 +21,10 @@ const Navbar: React.FC = () => {
 
   return (
     <div className="border-b border-gray-primary py-5">
-      <div className="bg-white container mx-auto 2xl:px-0 sm:px-5">
-        <div className="flex flex-col gap-5 sm:flex-row items-center justify-between">
+      <div className="container mx-auto bg-white sm:px-5 2xl:px-0">
+        <div className="flex flex-col items-center justify-between gap-5 sm:flex-row">
           <Link href="/">
-            <h5 className="font-bold text-xl">App - Resume Builder</h5>
+            <h5 className="text-xl font-bold">App - Resume Builder</h5>
           </Link>
           <nav>
             <ul className="flex items-center gap-5 text-sm">
@@ -33,11 +33,12 @@ const Navbar: React.FC = () => {
                   <Link
                     href={href}
                     className={clsx(
-                      "block py-2 px-3 rounded-lg hover:bg-slate-200 transition-all ease-in-out duration-200",
+                      "block rounded-lg px-3 py-2 transition-all duration-200 ease-in-out hover:bg-slate-200",
                       {
                         "bg-slate-400 text-white": active,
-                      }
-                    )}>
+                      },
+                    )}
+                  >
                     {label}
                   </Link>
                 </li>

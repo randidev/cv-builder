@@ -30,7 +30,7 @@ const ResumeForm: React.FC<CommonCandidateFormProps> = ({
     <div className="resume-form">
       <h3>Choose The Resume Template</h3>
       {templates.length > 0 ? (
-        <div className="grid grid-cols-3 mt-3">
+        <div className="mt-3 grid grid-cols-3">
           {templates.map(renderTemplate)}
         </div>
       ) : (

@@ -27,8 +27,9 @@ export default function TemplateList() {
     return (
       <div key={template.id} className="flex flex-col">
         <Link
-          className="block hover:translate-y-1 transition-all duration-200 w-fit"
-          href={`${APP.LINKS.TEMPLATES.EDIT}/${template.id}`}>
+          className="block w-fit transition-all duration-200 hover:translate-y-1"
+          href={`${APP.LINKS.TEMPLATES.EDIT}/${template.id}`}
+        >
           <PDFViewer width="100%" height="200px" showToolbar={false}>
             {template.type === "1" ? (
               <Template1 template={template} candidate={dummyCandidate} />
@@ -48,13 +49,15 @@ export default function TemplateList() {
             )
           }
           fileName={`${template.title}_CV_TEMPLATE.pdf`}
-          className="button-gray w-full mt-5 text-center">
+          className="button-gray mt-5 w-full text-center"
+        >
           {({ loading }) => (loading ? "Generating PDF..." : "Download PDF")}
         </PDFDownloadLink>
 
         <button
           onClick={(e) => handleDelete(e, template.id)}
-          className="button-gray w-full mt-2">
+          className="button-gray mt-2 w-full"
+        >
           Delete Template
         </button>
       </div>
@@ -62,16 +65,16 @@ export default function TemplateList() {
   };
 
   return (
-    <div className="container mx-auto py-5 lg:px-0 px-5">
-      <div className="flex justify-between items-center">
-        <h1 className="font-medium text-lg">My Templates</h1>
+    <div className="container mx-auto px-5 py-5 lg:px-0">
+      <div className="flex items-center justify-between">
+        <h1 className="text-lg font-medium">My Templates</h1>
         <Link className="button-gray block" href={APP.LINKS.TEMPLATES.CREATE}>
           Create New Template+
         </Link>
       </div>
       <div className="mt-6">
         {templates.length > 0 ? (
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+          <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-5">
             {templates.map((template) => (
               <TemplateItem key={template.id} template={template} />
             ))}

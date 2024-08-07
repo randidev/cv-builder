@@ -88,7 +88,8 @@ const Template1: React.FC<TemplateProps> = ({ template, candidate }) => {
   const renderExperience = (experience: Experience) => (
     <View
       key={experience.title}
-      style={{ marginTop: `${baseMarginSizes.section}pt` }}>
+      style={{ marginTop: `${baseMarginSizes.section}pt` }}
+    >
       <Text style={styles.text}>
         {experience.startDate}-{experience.endDate} | {experience.company},{" "}
         {experience.location}
@@ -144,7 +145,8 @@ const Template1: React.FC<TemplateProps> = ({ template, candidate }) => {
                 style={[
                   styles.text,
                   { marginTop: `${baseMarginSizes.text}pt` },
-                ]}>
+                ]}
+              >
                 {convertStringToComponents(candidate.description, styles)}
               </View>
             </View>
@@ -162,7 +164,8 @@ const Template1: React.FC<TemplateProps> = ({ template, candidate }) => {
                 flexDirection: "column",
                 gap: "10pt",
                 width: "100%",
-              }}>
+              }}
+            >
               <View style={styles.socialMedia}>
                 <Image
                   src={"/images/icons/phone-call.png"}

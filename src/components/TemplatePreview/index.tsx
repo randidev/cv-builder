@@ -44,7 +44,8 @@ export default function TemplatePreview({
             <Template template={debouncedTemplate} candidate={candidate} />
           }
           fileName={`${candidate?.firstName}_${candidate?.lastName}_CV.pdf`}
-          className="border border-black bg-gray-primary text-black py-2 px-4 rounded-full">
+          className="rounded-full border border-black bg-gray-primary px-4 py-2 text-black"
+        >
           {({ blob, url, loading }) =>
             loading ? "Generating PDF..." : "Download PDF"
           }
@@ -89,9 +90,9 @@ export default function TemplatePreview({
   }, [router.events]);
 
   return (
-    <div className="bg-dot relative bg-repeat bg-left-top bg-fixed w-full lg:w-[calc(100%-600px)]">
-      <div className="p-10 h-full">
-        <div className="bg-white shadow-lg h-full flex justify-center items-center">
+    <div className="relative w-full bg-dot bg-fixed bg-left-top bg-repeat lg:w-[calc(100%-600px)]">
+      <div className="h-full p-10">
+        <div className="flex h-full items-center justify-center bg-white shadow-lg">
           {!template || !debouncedTemplate ? (
             <>
               <p>Please choose the resume template first.</p>
@@ -99,21 +100,23 @@ export default function TemplatePreview({
                 onClick={() =>
                   dispatch(utilsActions.setUtils({ showEditor: true }))
                 }
-                className="border absolute bottom-5 border-black bg-gray-primary text-black py-2 px-4 rounded-full">
+                className="absolute bottom-5 rounded-full border border-black bg-gray-primary px-4 py-2 text-black"
+              >
                 Editor
               </button>
             </>
           ) : (
             <>
               {PDFPreview}
-              <div className="flex justify-center items-center gap-5 absolute bottom-5">
+              <div className="absolute bottom-5 flex items-center justify-center gap-5">
                 {PDFDownloadButton}
                 <div className="block lg:hidden">
                   <button
                     onClick={() =>
                       dispatch(utilsActions.setUtils({ showEditor: true }))
                     }
-                    className="border border-black bg-gray-primary text-black py-2 px-4 rounded-full">
+                    className="rounded-full border border-black bg-gray-primary px-4 py-2 text-black"
+                  >
                     Editor
                   </button>
                 </div>

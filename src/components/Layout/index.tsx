@@ -16,6 +16,19 @@ export default function Layout({ children }: PropsWithChildren) {
 
         <main>{children}</main>
 
+        <footer className="flex items-center justify-center py-2 shadow-sm">
+          <p className="text-sm">
+            Made with ❤️ by{" "}
+            <a
+              href="https://github.com/randidev"
+              target="_blank"
+              className="text-cyan-800 underline"
+            >
+              randidev
+            </a>
+          </p>
+        </footer>
+
         <Toaster position="bottom-left" />
       </div>
     </>

@@ -15,13 +15,16 @@ const config: Config = {
         "gray-primary": "#dbdada",
       },
       maxHeight: {
-        body: "calc(100vh - 77px)",
+        bodyMobile: "calc(100vh - 125px - 36px)",
+        body: "calc(100vh - 77px - 36px)",
       },
       minHeight: {
-        body: "calc(100vh - 77px)",
+        bodyMobile: "calc(100vh - 125px - 36px)",
+        body: "calc(100vh - 77px - 36px)",
       },
       height: {
-        body: "calc(100vh - 77px)",
+        bodyMobile: "calc(100vh - 125px - 36px)",
+        body: "calc(100vh - 77px - 36px)",
       },
     },
   },
