@@ -45,6 +45,21 @@ export default function useCandidate(id?: string | string[] | undefined) {
   const handleSubmit = useCallback(() => {
     toastId.current = toast.loading("Loading...");
     try {
+      if (
+        !temporaryCandidate.idTemplate ||
+        temporaryCandidate.idTemplate === ""
+      ) {
+        // template is required at least
+        throw "Please choose resume template first.";
+      }
+      if (
+        !temporaryCandidate.firstName ||
+        temporaryCandidate.firstName === ""
+      ) {
+        // first name is required at least
+        throw "Please fill the candidate's detail.";
+      }
+
       const uuid = uuidv4();
 
       if (id) {
@@ -67,9 +82,9 @@ export default function useCandidate(id?: string | string[] | undefined) {
       setTimeout(() => {
         router.push(APP.LINKS.CANDIDATES.DEFAULT + "?success");
       }, 1000);
-    } catch (error) {
+    } catch (error: any) {
       console.error(error);
-      toast.error("Something went wrong, please try again later.", {
+      toast.error(error, {
         id: toastId.current ?? "",
       });
       toastId.current = null;
