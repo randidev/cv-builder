@@ -1,22 +1,39 @@
 import { useRouter } from "next/router";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 const useUnsavedChangesWarning = (
-  message: string = "You have unsaved changes. Are you sure you want to leave?"
+  message: string = "Are you sure you want to leave?"
 ) => {
   const router = useRouter();
+  const isRedirecting = useRef(false);
 
   useEffect(() => {
-    const handleBeforeUnloadRouter = (e: string) => {
-      const passed = String(e).indexOf("?success") >= 0;
+    const handleBeforeUnloadRouter = (url: string) => {
+      if (isRedirecting.current) {
+        // Skip if already redirecting
+        return;
+      }
 
-      if (!passed && !confirm(message)) {
-        router.events.emit("routeChangeError");
-        throw "Route change aborted due to unsaved changes";
+      const passed = String(url).indexOf("?success") >= 0;
+      if (!passed) {
+        const userConfirmed = window.confirm(message);
+        if (userConfirmed) {
+          isRedirecting.current = true;
+          window.location.href = url;
+        } else {
+          // Cancel the route change
+          router.events.emit("routeChangeError");
+          throw "routeChange aborted by user"; // This is necessary to prevent the route change
+        }
       }
     };
 
     const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+      if (isRedirecting.current) {
+        // Skip if already redirecting
+        return;
+      }
+
       e.preventDefault();
       e.returnValue = message;
       return message;
@@ -29,7 +46,9 @@ const useUnsavedChangesWarning = (
       window.removeEventListener("beforeunload", handleBeforeUnload);
       router.events.off("routeChangeStart", handleBeforeUnloadRouter);
     };
-  }, [message]);
+  }, [message, router, isRedirecting]);
+
+  return null; // Ensure the hook doesn't render anything
 };
 
 export default useUnsavedChangesWarning;

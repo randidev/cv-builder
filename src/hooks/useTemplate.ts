@@ -6,6 +6,7 @@ import useAppSelector from "@/hooks/useAppSelector";
 import { actions, selectors } from "@/redux/templates";
 import { v4 as uuidv4 } from "uuid";
 import APP from "@/config/app";
+import { initialTempState } from "@/redux/templates/slices";
 
 const useTemplate = (id?: string | string[] | undefined) => {
   const dispatch = useAppDispatch();
@@ -42,6 +43,7 @@ const useTemplate = (id?: string | string[] | undefined) => {
           id: toastId.current,
         });
       }
+      dispatch(actions.setTempTemplateAction(initialTempState.detail));
 
       setTimeout(() => {
         router.push(APP.LINKS.TEMPLATES.DEFAULT + "?success");

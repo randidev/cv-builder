@@ -10,6 +10,7 @@ import toast from "react-hot-toast";
 import { v4 as uuidv4 } from "uuid";
 import { useRouter } from "next/router";
 import APP from "@/config/app";
+import { initialTempState } from "@/redux/candidate/slices";
 
 export default function useCandidate(id?: string | string[] | undefined) {
   const dispatch = useAppDispatch();
@@ -61,6 +62,7 @@ export default function useCandidate(id?: string | string[] | undefined) {
         });
         toastId.current = null;
       }
+      dispatch(actions.setTempCandidateAction(initialTempState.detail));
 
       setTimeout(() => {
         router.push(APP.LINKS.CANDIDATES.DEFAULT + "?success");

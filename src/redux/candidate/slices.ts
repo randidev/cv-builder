@@ -34,7 +34,7 @@ const candidateSlice = createSlice({
 });
 
 // Temporary template use when creating a new template
-const initialTempState: TemporaryCandidateState = {
+export const initialTempState: TemporaryCandidateState = {
   detail: {
     id: "",
     firstName: "",
