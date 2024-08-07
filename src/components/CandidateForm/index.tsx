@@ -135,7 +135,7 @@ const CandidateForm: React.FC<CandidateFormProps> = ({
       <button
         onClick={() => dispatch(actions.setUtilsAction({ showEditor: false }))}
         type="button"
-        className="mt-10 absolute bottom-5 left-1/2 -translate-x-1/2 w-3/4 lg:hidden block button-gray">
+        className="mt-20 relative bottom-5 left-1/2 -translate-x-1/2 w-3/4 lg:hidden block button-gray">
         Preview
       </button>
     </div>
