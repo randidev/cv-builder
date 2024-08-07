@@ -11,9 +11,9 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <Provider store={store}>
       <PersistGate persistor={persistor}>
-        <Analytics />
         <Layout>
           <Component {...pageProps} />
+          <Analytics />
         </Layout>
       </PersistGate>
     </Provider>
