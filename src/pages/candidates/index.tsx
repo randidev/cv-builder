@@ -39,31 +39,37 @@ export default function ResumeList() {
         className="block w-fit transition-all duration-200 hover:translate-y-1"
         href={`${APP.LINKS.CANDIDATES.EDIT}/${candidate.id}`}
       >
-        <PDFViewer width={"100%"} height={"200px"} showToolbar={false}>
-          {template.type === "1" ? (
-            <Template1 template={template} candidate={candidate} />
-          ) : (
-            <Template2 template={template} candidate={candidate} />
-          )}
-        </PDFViewer>
+        {template ? (
+          <PDFViewer width={"100%"} height={"200px"} showToolbar={false}>
+            {template.type === "1" ? (
+              <Template1 template={template} candidate={candidate} />
+            ) : (
+              <Template2 template={template} candidate={candidate} />
+            )}
+          </PDFViewer>
+        ) : (
+          <span>Template not found or has been deleted.</span>
+        )}
         <h3 className="mt-4">
           {candidate.firstName} {candidate.lastName}
         </h3>
       </Link>
 
-      <PDFDownloadLink
-        document={
-          template.type === "1" ? (
-            <Template1 template={template} candidate={candidate} />
-          ) : (
-            <Template2 template={template} candidate={candidate} />
-          )
-        }
-        fileName={`${candidate.firstName}_${candidate.lastName}_CV.pdf`}
-        className="button-gray mt-5 w-full text-center"
-      >
-        {({ loading }) => (loading ? "Generating PDF..." : "Download PDF")}
-      </PDFDownloadLink>
+      {template && (
+        <PDFDownloadLink
+          document={
+            template.type === "1" ? (
+              <Template1 template={template} candidate={candidate} />
+            ) : (
+              <Template2 template={template} candidate={candidate} />
+            )
+          }
+          fileName={`${candidate.firstName}_${candidate.lastName}_CV.pdf`}
+          className="button-gray mt-5 w-full text-center"
+        >
+          {({ loading }) => (loading ? "Generating PDF..." : "Download PDF")}
+        </PDFDownloadLink>
+      )}
 
       <button
         onClick={(e) => handleDelete(e, candidate.id)}
@@ -75,7 +81,7 @@ export default function ResumeList() {
   );
 
   return (
-    <div className="container mx-auto px-5 py-5 lg:px-0">
+    <div className="container mx-auto min-h-bodyMobile px-5 py-5 sm:min-h-body lg:px-0">
       <div className="flex items-center justify-between">
         <h1 className="text-lg font-medium">My Candidates</h1>
         <Link className="button-gray block" href={APP.LINKS.CANDIDATES.CREATE}>
@@ -90,13 +96,11 @@ export default function ResumeList() {
                 (t) => t.id === candidate.idTemplate,
               );
               return (
-                selectedTemplate && (
-                  <CandidateItem
-                    key={candidate.id}
-                    candidate={candidate}
-                    template={selectedTemplate}
-                  />
-                )
+                <CandidateItem
+                  key={candidate.id}
+                  candidate={candidate}
+                  template={selectedTemplate as Template}
+                />
               );
             })}
           </div>

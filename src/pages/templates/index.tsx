@@ -65,7 +65,7 @@ export default function TemplateList() {
   };
 
   return (
-    <div className="container mx-auto px-5 py-5 lg:px-0">
+    <div className="container mx-auto min-h-bodyMobile px-5 py-5 sm:min-h-body lg:px-0">
       <div className="flex items-center justify-between">
         <h1 className="text-lg font-medium">My Templates</h1>
         <Link className="button-gray block" href={APP.LINKS.TEMPLATES.CREATE}>
