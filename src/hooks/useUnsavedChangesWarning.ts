@@ -10,8 +10,6 @@ const useUnsavedChangesWarning = (
     const handleBeforeUnloadRouter = (e: string) => {
       const passed = String(e).indexOf("?success") >= 0;
 
-      console.log(e);
-
       if (!passed && !confirm(message)) {
         router.events.emit("routeChangeError");
         throw "Route change aborted due to unsaved changes";
@@ -19,7 +17,6 @@ const useUnsavedChangesWarning = (
     };
 
     const handleBeforeUnload = (e: BeforeUnloadEvent) => {
-      console.log(e);
       e.preventDefault();
       e.returnValue = message;
       return message;

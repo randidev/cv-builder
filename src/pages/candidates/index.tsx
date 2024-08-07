@@ -72,7 +72,7 @@ export default function ResumeList() {
   );
 
   return (
-    <div className="container mx-auto py-5">
+    <div className="container mx-auto py-5 lg:px-0 px-5">
       <div className="flex justify-between items-center">
         <h1 className="font-medium text-lg">My Candidates</h1>
         <Link className="button-gray block" href={APP.LINKS.CANDIDATES.CREATE}>
@@ -81,7 +81,7 @@ export default function ResumeList() {
       </div>
       <div className="mt-6">
         {candidates.length > 0 ? (
-          <div className="grid grid-cols-5 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
             {candidates.map((candidate) => {
               const selectedTemplate = templates.find(
                 (t) => t.id === candidate.idTemplate

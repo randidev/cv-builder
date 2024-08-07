@@ -2,6 +2,10 @@ import { FormEvent } from "react";
 import Breadcrumb from "../Breadcrumb";
 import { convertImageToBase64 } from "@/utils/helpers";
 import APP from "@/config/app";
+import useAppDispatch from "@/hooks/useAppDispatch";
+import useAppSelector from "@/hooks/useAppSelector";
+import { actions, selectors } from "@/redux/utils";
+import clsx from "clsx";
 
 interface TemplateFormProps {
   template: Template;
@@ -14,6 +18,9 @@ export default function TemplateForm({
   template,
   onChange,
 }: TemplateFormProps) {
+  const dispatch = useAppDispatch();
+  const { interface: utils } = useAppSelector(selectors.utils);
+
   const breadcrumbs = [
     { text: "Home", link: "/" },
     { text: "Templates", link: APP.LINKS.TEMPLATES.DEFAULT },
@@ -40,7 +47,12 @@ export default function TemplateForm({
   };
 
   return (
-    <div className="p-5 max-w-[600px] md:w-[600px] w-full border-l border-gray-primary md:block hidden overflow-y-auto max-h-body">
+    <div
+      className={clsx(
+        "p-5 max-w-full bg-white h-body lg:w-[600px] w-full border-l border-gray-primary overflow-y-auto max-h-body lg:translate-x-0 lg:relative absolute transition-all duration-300",
+        { "translate-x-full": !utils.showEditor },
+        { "translate-x-0": utils.showEditor }
+      )}>
       <div className="mb-10 flex items-center justify-between">
         <Breadcrumb items={breadcrumbs} />
         <h3 className="text-lg font-medium">Editor</h3>
@@ -48,7 +60,7 @@ export default function TemplateForm({
       <form onSubmit={handleSubmit} className="mt-5">
         <div className="flex flex-col gap-5">
           <label className="font-medium">Type</label>
-          <div className="flex items-start gap-10">
+          <div className="flex items-start flex-wrap gap-10">
             {["1", "2"].map((type) => (
               <label
                 key={type}
@@ -151,7 +163,15 @@ export default function TemplateForm({
           )}
         </div>
 
-        <button type="submit" className="mt-10 button-gray w-full">
+        <button
+          onClick={() =>
+            dispatch(actions.setUtilsAction({ showEditor: false }))
+          }
+          type="button"
+          className="mt-10 lg:hidden block button-gray w-full">
+          Preview
+        </button>
+        <button type="submit" className="mt-5 button-gray w-full">
           Submit
         </button>
       </form>

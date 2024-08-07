@@ -21,8 +21,8 @@ const Navbar: React.FC = () => {
 
   return (
     <div className="border-b border-gray-primary py-5">
-      <div className="bg-white container mx-auto">
-        <div className="flex items-center justify-between">
+      <div className="bg-white container mx-auto 2xl:px-0 sm:px-5">
+        <div className="flex flex-col gap-5 sm:flex-row items-center justify-between">
           <Link href="/">
             <h5 className="font-bold text-xl">App - Resume Builder</h5>
           </Link>

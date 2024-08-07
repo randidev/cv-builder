@@ -62,7 +62,7 @@ export default function TemplateList() {
   };
 
   return (
-    <div className="container mx-auto py-5">
+    <div className="container mx-auto py-5 lg:px-0 px-5">
       <div className="flex justify-between items-center">
         <h1 className="font-medium text-lg">My Templates</h1>
         <Link className="button-gray block" href={APP.LINKS.TEMPLATES.CREATE}>
@@ -71,7 +71,7 @@ export default function TemplateList() {
       </div>
       <div className="mt-6">
         {templates.length > 0 ? (
-          <div className="grid grid-cols-5 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
             {templates.map((template) => (
               <TemplateItem key={template.id} template={template} />
             ))}

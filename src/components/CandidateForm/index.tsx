@@ -4,6 +4,10 @@ import { convertImageToBase64 } from "@/utils/helpers";
 import APP from "@/config/app";
 import dynamic from "next/dynamic";
 import { FaChevronLeft } from "react-icons/fa";
+import useAppDispatch from "@/hooks/useAppDispatch";
+import useAppSelector from "@/hooks/useAppSelector";
+import { actions, selectors } from "@/redux/utils";
+import clsx from "clsx";
 
 interface MenuItemProps {
   label: string;
@@ -45,6 +49,8 @@ const CandidateForm: React.FC<CandidateFormProps> = ({
     },
   ];
 
+  const dispatch = useAppDispatch();
+  const { interface: utils } = useAppSelector(selectors.utils);
   const [form, setForm] = useState<null | { title: string; component: string }>(
     null
   );
@@ -75,8 +81,8 @@ const CandidateForm: React.FC<CandidateFormProps> = ({
     [candidate, templates, onChange]
   );
 
-  const renderMenuItems = () => {
-    const menuItems = [
+  const menuItems = useMemo(
+    () => [
       { label: "Resume Template", component: "ResumeForm" },
       { label: "Personal Details", component: "PersonalDetailsForm" },
       { label: "Experiences", component: "ExperienceForm" },
@@ -84,19 +90,26 @@ const CandidateForm: React.FC<CandidateFormProps> = ({
       { label: "Skills", component: "SkillForm" },
       { label: "Certificates", component: "CertificationForm" },
       { label: "Description", component: "DescriptionForm" },
-    ];
+    ],
+    []
+  );
 
-    return menuItems.map(({ label, component }) => (
+  const renderMenuItems = () =>
+    menuItems.map(({ label, component }) => (
       <MenuItem
         key={component}
         label={label}
         onClick={() => setForm({ component, title: label })}
       />
     ));
-  };
 
   return (
-    <div className="p-5 max-w-[600px] md:w-[600px] w-full border-l border-gray-primary md:block hidden overflow-y-auto max-h-body">
+    <div
+      className={clsx(
+        "p-5 max-w-full h-body lg:w-[600px] w-full bg-white border-l border-gray-primary lg:translate-x-0 lg:relative absolute transition-all duration-300 overflow-y-auto max-h-body",
+        { "translate-x-full": !utils.showEditor },
+        { "translate-x-0": utils.showEditor }
+      )}>
       <div className="mb-10 flex items-center justify-between">
         <Breadcrumb items={breadcrumbs} />
         <button className="button-gray" onClick={handleSubmit}>
@@ -118,6 +131,13 @@ const CandidateForm: React.FC<CandidateFormProps> = ({
           <div className="flex flex-col">{renderMenuItems()}</div>
         )}
       </div>
+
+      <button
+        onClick={() => dispatch(actions.setUtilsAction({ showEditor: false }))}
+        type="button"
+        className="mt-10 absolute bottom-5 left-1/2 -translate-x-1/2 w-3/4 lg:hidden block button-gray">
+        Preview
+      </button>
     </div>
   );
 };

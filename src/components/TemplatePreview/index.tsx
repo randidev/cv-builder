@@ -4,6 +4,8 @@ import { useEffect, useMemo, useRef } from "react";
 import { Template1, Template2 } from "../PDFTemplates";
 import toast from "react-hot-toast";
 import { useRouter } from "next/router";
+import useAppDispatch from "@/hooks/useAppDispatch";
+import { utilsActions } from "@/redux/utils/slices";
 
 interface TemplatePreviewProps {
   template: Template;
@@ -15,6 +17,7 @@ export default function TemplatePreview({
   candidate,
 }: TemplatePreviewProps) {
   const router = useRouter();
+  const dispatch = useAppDispatch();
   const { data: debouncedTemplate, loading } = useDebounceState(template, 1000);
   const { data: debouncedCandidate, loading: loadingCandidate } =
     useDebounceState(candidate, 1000);
@@ -41,7 +44,7 @@ export default function TemplatePreview({
             <Template template={debouncedTemplate} candidate={candidate} />
           }
           fileName={`${candidate?.firstName}_${candidate?.lastName}_CV.pdf`}
-          className="border border-black bg-gray-primary absolute bottom-5 left-1/2 -translate-x-1/2 text-black py-2 px-4 rounded-full">
+          className="border border-black bg-gray-primary text-black py-2 px-4 rounded-full">
           {({ blob, url, loading }) =>
             loading ? "Generating PDF..." : "Download PDF"
           }
@@ -86,15 +89,35 @@ export default function TemplatePreview({
   }, [router.events]);
 
   return (
-    <div className="bg-dot relative bg-repeat bg-left-top bg-fixed w-full md:w-[calc(100%-600px)]">
+    <div className="bg-dot relative bg-repeat bg-left-top bg-fixed w-full lg:w-[calc(100%-600px)]">
       <div className="p-10 h-full">
         <div className="bg-white shadow-lg h-full flex justify-center items-center">
           {!template || !debouncedTemplate ? (
-            "Please choose the resume template first."
+            <>
+              <p>Please choose the resume template first.</p>
+              <button
+                onClick={() =>
+                  dispatch(utilsActions.setUtils({ showEditor: true }))
+                }
+                className="border absolute bottom-5 border-black bg-gray-primary text-black py-2 px-4 rounded-full">
+                Editor
+              </button>
+            </>
           ) : (
             <>
               {PDFPreview}
-              {PDFDownloadButton}
+              <div className="flex justify-center items-center gap-5 absolute bottom-5">
+                {PDFDownloadButton}
+                <div className="block lg:hidden">
+                  <button
+                    onClick={() =>
+                      dispatch(utilsActions.setUtils({ showEditor: true }))
+                    }
+                    className="border border-black bg-gray-primary text-black py-2 px-4 rounded-full">
+                    Editor
+                  </button>
+                </div>
+              </div>
             </>
           )}
         </div>

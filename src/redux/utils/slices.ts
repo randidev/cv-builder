@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export const initialState: Utils = {
   interface: {
-    showEditor: true,
+    showEditor: false,
   },
 };
 
