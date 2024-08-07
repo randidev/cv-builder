@@ -207,7 +207,6 @@ The resume builder meets the specified requirements, providing a robust solution
 ### 4.3 Lessons Learned
 
 - **Importance of Flexibility**: Ensuring the template system is flexible and user-friendly was crucial for meeting diverse user needs.
-- **Testing and Optimization**: Thorough testing and performance optimization are essential for delivering a smooth user experience.
 
 ## 5. References
 
