@@ -100,7 +100,7 @@ export default function TemplatePreview({
                 onClick={() =>
                   dispatch(utilsActions.setUtils({ showEditor: true }))
                 }
-                className="absolute bottom-5 rounded-full border border-black bg-gray-primary px-4 py-2 text-black"
+                className="absolute bottom-5 block rounded-full border border-black bg-gray-primary px-4 py-2 text-black lg:hidden"
               >
                 Editor
               </button>
