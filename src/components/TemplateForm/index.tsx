@@ -58,7 +58,11 @@ export default function TemplateForm({
         <Breadcrumb items={breadcrumbs} />
         <h3 className="text-lg font-medium">Editor</h3>
       </div>
-      <form onSubmit={handleSubmit} className="mt-5">
+      <form
+        data-testid="form-template-editor"
+        onSubmit={handleSubmit}
+        className="mt-5"
+      >
         <div className="flex flex-col gap-5">
           <label className="font-medium">Type</label>
           <div className="flex flex-wrap items-start gap-10">
@@ -92,6 +96,7 @@ export default function TemplateForm({
             className="form-control"
             id="title"
             required
+            data-testid="title-input"
             name="title"
             value={template.title}
             onChange={handleInputChange("title")}
@@ -106,6 +111,7 @@ export default function TemplateForm({
               type="range"
               min={0}
               max={200}
+              data-testid="fontSize-input"
               id="fontSize"
               name="fontSize"
               required
@@ -120,6 +126,7 @@ export default function TemplateForm({
           <label htmlFor="colour">Colour Scheme</label>
           <input
             className="form-control"
+            data-testid="color-input"
             type="color"
             id="colour"
             name="colour"
@@ -134,6 +141,7 @@ export default function TemplateForm({
           <div className="flex items-center gap-2">
             <input
               className="form-control"
+              data-testid="margin-input"
               type="range"
               min={0}
               max={200}
@@ -152,12 +160,14 @@ export default function TemplateForm({
           <input
             type="file"
             className="form-control"
+            data-testid="watermark-input"
             id="watermark"
             name="watermark"
             onChange={handleFileChange}
           />
           {template.watermark && (
             <img
+              data-testid="watermark-preview"
               src={template.watermark}
               className="mt-2 max-w-[150px]"
               alt="Watermark preview"
